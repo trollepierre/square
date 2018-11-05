@@ -8,19 +8,40 @@ var windowWidth = $(window).width()
 var windowHeight = $(window).height()
 
 // Define margin value to place randomly the square
-var placeSquare = function () {
+var placeSquare = function (element, squareDimension) {
   var marginLeft = Math.floor(Math.random() * (windowWidth - squareDimension))
   var marginTop = Math.floor(Math.random() * (windowHeight - squareDimension))
-  square.css({ marginLeft: marginLeft + "px", marginTop: marginTop + "px" })
+  element.css({
+    marginLeft: marginLeft + "px",
+    marginTop: marginTop + "px",
+    height: squareDimension + "px",
+    width: squareDimension + "px",
+  })
 }
 
-placeSquare()
+// Use only in setRandomColor
+function getRandomColor() {
+  var letters = '0123456789ABCDEF'
+  var color = '#'
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)]
+  }
+  return color
+}
 
+// Colorize Randomly
+function setRandomColor(element) {
+  element.css("background-color", getRandomColor())
+}
+
+// First iteration
+placeSquare(square, squareDimension)
+setRandomColor(square)
+
+// For bigBangActivationPurpose
 var addSquares = function (times) {
-
   while (times !== 0) {
-    console.log(times)
-    $(".container").add("div").addClass("square")
+    $("#container").append("<div class='square'></div>")
     times -= 1
   }
 }
@@ -30,6 +51,11 @@ var bigBangActivation = function () {
   numberOfSquare *= 4
   squareDimension /= 4
   alert("One square has been clicked")
-  placeSquare()
+
+  $(".square").each(function () {
+    setRandomColor($(this))
+    placeSquare($(this), squareDimension)
+  })
 }
+
 square.click(bigBangActivation)
