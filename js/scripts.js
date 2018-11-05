@@ -16,7 +16,8 @@ var placeSquare = function (element, squareDimension) {
     marginTop: marginTop + "px",
     height: squareDimension + "px",
     width: squareDimension + "px",
-  })
+    position: "absolute"
+})
 }
 
 // Use only in setRandomColor
@@ -55,6 +56,7 @@ var bigBangActivation = function () {
   $(".square").each(function () {
     setRandomColor($(this))
     placeSquare($(this), squareDimension)
+    $(this).click(bigBangActivation)
   })
 }
 
